@@ -142,6 +142,54 @@ let () =
   let img1 = I.string A.(fg lightgreen) "image1" in
   I.(img1 </> bar) |> Notty_unix.output_image_endline
 ```
+#### Image modification
+Basic notty images can be modified by cropping them or by adding them padding.
+
+#### Cropping image
+
+##### Horizontal cropping:
+
+```ocaml
+open Notty
+open Notty_unix
+
+(* ocamlfind ocamlc -o basics_hcropping -package notty,notty.unix  -linkpkg -g basics_I_hcropping.ml *)
+let long_line_str = "This is a line that will be cropped 2 unit left and 5 unit right"
+
+let () =
+  let long_line = I.string A.(fg lightgreen ++ bg black) long_line_str in
+  let long_line_cropped = I.hcrop 2 5 long_line in
+  I.(long_line <-> long_line_cropped) |> Notty_unix.output_image_endline
+```
+
+#### Vertical cropping:
+
+```ocaml
+open Notty
+open Notty_unix
+
+(* ocamlfind ocamlc -o basics_vcropping -package notty,notty.unix  -linkpkg -g basics_I_vcropping.ml *)
+let line_str num =
+  "line number " ^ (string_of_int num)
+
+let build_5_lines () =
+  let rec _build img remain =
+    if remain = 0 then img
+    else let str = line_str (6 - remain) in
+    _build I.(img <-> string A.(fg lightgreen ++ bg black) str) (remain - 1)
+  in _build (I.string A.(fg lightgreen ++ bg black) (line_str 1)) 4
+
+let description =
+  I.string A.(fg lightyellow ++ bg lightblack) "crop 2 at top and 1 at bottom"
+
+let () =
+   I.(build_5_lines () <->
+   description <->
+   vcrop 2 1 (build_5_lines ())) |> Notty_unix.output_image_endline
+```
+#### Padding
+##### Negative cropping
+##### Padding functions
 
 #### The Term module
 
