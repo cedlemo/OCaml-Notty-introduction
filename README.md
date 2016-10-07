@@ -1,5 +1,16 @@
 # Ocaml Notty library
 
+* [Introduction](#introduction)
+* [Basics](#basics)
+  * [Image](#image)
+  * [The Image module](#the-image-module)
+    * [Image Creation](#image-creation)
+    * [Image Composition](#image-composition)
+    * [Image Modification](#image-modification)
+      * [Cropping Image](#cropping-image)
+      * [Padding](#padding)
+  * [The Term module](#the-term-module)
+
 ## Introduction
 
 Better than curses/ncurses, here is Notty. Written in OCaml, this library
@@ -34,11 +45,11 @@ attributes `A.(fg lightred)`. Then We compose a bigger image and display twice
 the `wow` image at different position. The function `Notty_unix.output_image_endline
 allow us to display the generated image.
 
-#### The Image module:
+### The Image module
 
 https://pqwy.github.io/notty/Notty.I.html
 
-##### Image Creation
+#### Image Creation
 
 Basics images can be created with :
 
@@ -52,7 +63,7 @@ or 2 specials primitives:
 *  `I.empty`  : which is a zero sized image.
 *  `I.void`   : require a width and an height, it is a transparent image.
 
-###### I.string basic example
+##### I.string basic example
 
 ```ocaml
 open Notty
@@ -62,7 +73,7 @@ let () =
  I.string A.(fg lightred) "Wow!" |> Notty_unix.output_image_endline
 ```
 
-###### I.uchars basic example
+##### I.uchars basic example
 
 ```ocaml
 open Notty
@@ -74,7 +85,7 @@ let () =
    I.uchars A.(fg lightred) my_unicode_chars |> Notty_unix.output_image_endline
 ```
 
-###### I.char basic example
+##### I.char basic example
 
 ```ocaml
 open Notty
@@ -85,7 +96,7 @@ let () =
 
 ```
 
-###### I.uchar basic example
+##### I.uchar basic example
 
 ```ocaml
 open Notty
@@ -104,7 +115,7 @@ complexe ones.
 *  (<->) : puts one image below another
 *  (</>) : puts one image on another.
 
-###### Side by side images
+##### Side by side images
 
 ```ocaml
 open Notty
@@ -117,7 +128,7 @@ let () =
   I.(img1 <|> bar) |> Notty_unix.output_image_endline
 ```
 
-###### Image above another
+##### Image above another
 
 ```ocaml
 open Notty
@@ -130,7 +141,7 @@ let () =
   I.(img1 <-> bar) |> Notty_unix.output_image_endline
 ```
 
-###### Image overlay
+##### Image overlay
 
 ```ocaml
 open Notty
@@ -250,13 +261,13 @@ let () =
    pad ~l:2 ~r:3 ~t:4 ~b:1 (build_5_lines ())) |> Notty_unix.output_image_endline
 ```
 
-#### The Term module
+### The Term module
 
 *  http://pqwy.github.io/notty/Notty_unix.Term.html
 
 It is an helper for fullscreen, interactive applications.
 
-##### Simple interactive fullscreen
+#### Simple interactive fullscreen
 
 ```ocaml
 open Notty
