@@ -2,7 +2,9 @@ open Notty
 open Notty_unix
 open Common
 
-(* ocamlbuild -pkg notty -pkg notty.unix basics_Term_simple_terminal_size.native *)
+(* ocamlbuild -pkg notty -pkg notty.unix basics_Term_simple_terminal_size.native
+ * or
+ * ocamlfind ocamlc -o simple_terminal -package notty.unix  -linkpkg -g common.ml basics_Term_simple_terminal_size.ml*)
 
 let grid xxs = xxs |> List.map I.hcat |> I.vcat
 
