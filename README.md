@@ -8,7 +8,11 @@
     * [Image Composition](#image-composition)
     * [Image Modification](#image-modification)
       * [Cropping Image](#cropping-image)
+        * [Horizontal cropping](#horizontal-cropping)
+	* [Vertical cropping](#vertical-cropping)
       * [Padding](#padding)
+        * [Negative cropping](#negative-cropping)
+	* [Padding functions](#padding-functions)
   * [The Notty_unix.Term module](#the-unix-term-module)
   * [The Notty_lwt.Term module](#the-lwt-term-module)
 
@@ -17,20 +21,25 @@
 Better than curses/ncurses, here is Notty. Written in OCaml, this library
 is based on the notion of composable images.
 
+  * [Notty on Github](https://github.com/pqwy/notty)
+  * [documentation](https://pqwy.github.io/notty/Notty.html)
+
 ## Basics
 
 ### Image
 
-An image is rectangle displayed in the terminal that contains styled characters.
-An image can be a single character with display attributes, or some text or
-a combinaison of both beside, above or over each other.
+An image is a rectangle displayed in the terminal that contains styled characters.
+An image can be:
+  * a single character with display attributes,
+  * or some text with display attributes,
+  * or a combinaison of both beside, above or over each other.
 
-After its construction, the image can be rendered, basically it is tranformed
+After its construction, the image can be rendered. Basically, it is tranformed
 to a string we can display.
 
 Print a red "Wow!" above its right-shifted copy:
 
-```
+```ocaml
 open Notty
 open Notty_unix
 
@@ -41,9 +50,10 @@ let () =
 	let wow = I.string A.(fg lightred) "Wow!" in
 	I.(wow <-> (void 2 0 <|> wow)) |> Notty_unix.output_image_endline
 ```
-In this program we create an Image that is based on a string "Wow!" with some
-attributes `A.(fg lightred)`. Then We compose a bigger image and display twice
-the `wow` image at different position. The function `Notty_unix.output_image_endline
+
+In this program we create an image that is based on a string "Wow!" with some
+attributes `A.(fg lightred)`. Then we compose a bigger image and display twice
+the `wow` image at different position. The function `Notty_unix.output_image_endline`
 allow us to display the generated image.
 
 ### The Image module
@@ -112,9 +122,9 @@ let () =
 There are 3 composition modes which allow you to blend simple images into
 complexe ones.
 
-*  (<|>) : puts one image after another
-*  (<->) : puts one image below another
-*  (</>) : puts one image on another.
+*  `I.(<|>)` : puts one image after another
+*  `I.(<->)` : puts one image below another
+*  `I.(</>)` : puts one image on another.
 
 ##### Side by side images
 
@@ -154,10 +164,17 @@ let () =
   let img1 = I.string A.(fg lightgreen) "image1" in
   I.(img1 </> bar) |> Notty_unix.output_image_endline
 ```
-#### Image modification
+
+#### Image modifications
+
 Basic notty images can be modified by cropping them or by adding them padding.
 
 #### Cropping image
+
+*  `I.hcrop`
+*  `I.vcrop`
+*  `I.crop`
+
 
 ##### Horizontal cropping:
 
@@ -175,10 +192,6 @@ let () =
 ```
 
 ##### Vertical cropping:
-
-*  hcrop
-*  vcrop
-*  crop
 
 ```ocaml
 open Notty
@@ -234,9 +247,9 @@ The same applies to `I.hcrop`.
 
 ##### Padding functions
 
-*  hpad
-*  vpad
-*  pad
+*  `I.hpad`
+*  `I.vpad`
+*  `I.pad`
 
 ```ocaml
 open Notty
@@ -288,6 +301,7 @@ let rec main_loop t =
 let () =
   let t = Term.create () in main_loop t
 ```
+
 This little programm just draw in all the terminal, add a string and wait for
 key events. Press "Esc" and the program exits.
 
@@ -333,10 +347,9 @@ let () =
   main t (Term.size t)
 ```
 
-*  The grid function, take a list of list of images and compose a bigger image.
-*  The outline function draw a line a the border of the screen.
-*  The attr argument
-allow to configure the style of the line.
+*  The grid function takes a list of list of images and compose a bigger image.
+*  The outline function draws a line at the border of the screen.
+*  The attr argument allows to configure the style of the line.
 
 ### The Lwt Term module
 
