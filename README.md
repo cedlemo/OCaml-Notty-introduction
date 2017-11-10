@@ -419,7 +419,7 @@ another loop.
 It is a very simple terminal application that displays a counter. The user can
 leave it with `Esc`.
 
-```
+```ocaml
 (* ocamlfind ocamlc -o basics_Lwt_Term_simple_terminal_timeout -package lwt,notty.lwt -linkpkg -g basics_Lwt_Term_simple_terminal_timeout.ml *)
 open Lwt
 open Lwt.Infix
