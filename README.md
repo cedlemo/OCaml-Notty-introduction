@@ -43,12 +43,14 @@ Print a red "Wow!" above its right-shifted copy:
 open Notty
 open Notty_unix
 
-(* build with
+(*
  * ocamlbuild -pkg notty -pkg notty.unix basics_wow.native
  *)
 let () =
-	let wow = I.string A.(fg lightred) "Wow!" in
-	I.(wow <-> (void 2 0 <|> wow)) |> Notty_unix.output_image_endline
+let wow = I.string A.(fg lightred) "Wow!" in
+I.(wow <-> (void 2 0 <|> wow))
+|> Notty_unix.eol
+|> Notty_unix.output_image
 ```
 
 In this program we create an image that is based on a string "Wow!" with some
