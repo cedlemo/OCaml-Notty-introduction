@@ -22,7 +22,7 @@ Better than curses/ncurses, here is Notty. Written in OCaml, this library
 is based on the notion of composable images.
 
   * [Notty on Github](https://github.com/pqwy/notty)
-  * [documentation](https://pqwy.github.io/notty/Notty.html)
+  * [documentation](http://pqwy.github.io/notty/doc/Notty.html)
 
 ## Basics
 
