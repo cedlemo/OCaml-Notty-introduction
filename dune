@@ -1,0 +1,19 @@
+(executables
+ (libraries notty notty.unix lwt lwt.unix notty.lwt)
+ (names
+  basics_I_above_another
+  basics_I_char
+  basics_I_hcropping
+  basics_I_negative_vcropping
+  basics_I_overlay
+  basics_I_padding
+  basics_I_side_by_side
+  basics_I_string
+  basics_I_uchar
+  basics_I_uchars
+  basics_I_vcropping
+  basics_Lwt_Term_simple_terminal_resize
+  basics_Lwt_Term_simple_terminal_timeout
+  basics_Term_simple_terminal
+  basics_Term_simple_terminal_resize
+  basics_wow))
